@@ -1,0 +1,19 @@
+#! /bin/bash
+key=$1
+
+case $key in
+    -hq)
+        echo "Setting High Quality Audio"
+        sudo cp hq.conf /etc/pulse/daemon.conf
+        ;;
+    -lq)
+        echo "Setting Low Quality Audio"
+        sudo cp lq.conf /etc/pulse/daemon.conf
+        ;;
+esac
+
+echo "Restarting Pulse Audio Daemon"
+pulseaudio -k
+pulseaudio --start
+echo "Sample set to:"
+pacmd list-sinks | grep sample
